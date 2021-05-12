@@ -1,15 +1,13 @@
 package nz.ac.massey.cs.webtech.s19041253;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
 
-@WebServlet(name = "Stand", urlPatterns = {"/jack/move/stand"})
+
 public class Stand extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -36,51 +34,23 @@ public class Stand extends HttpServlet {
                 computerString.append("[Hidden]");
             }
 
-
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet start</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Servlet start at " + request.getContextPath() + "</h1>");
-                out.println("<p>");
-                out.println("Computer Hand: " + computerHand.getFirstCard().getSuit() + Integer.toString(computerHand.getFirstCard().getCardValue()) + computerString);
-                out.println("User Hand: " + cardString);
-                out.println("</p>");
-                out.println("</body>");
-                out.println("</form>");
-                out.println("<form action='/jack/won' method='post'>");
-                out.println("<input type='submit' value='See winner'>");
-                out.println("</form>");
-                out.println("<a href='/jack/stats' class=button> Game Stats</a>");
-                out.println("</html>");
-            }
+            session.setAttribute("computerHandString", "Computer Hand: " + computerHand.getFirstCard().getSuit() + computerHand.getFirstCard().getCardValue() + computerString);
+            session.setAttribute("button", "<form action='/jack/move/stand' method='post'><input type='submit' value='Stand'>" +
+                    " </form><form action='/jack/move/hit' method='post'> <input type='submit' value='Hit'></form>" +
+                    "<form action='/jack/won' method='post'><input type='submit' value='See winner'></form>" +
+                    "<a href='/jack/stats' class=button> Game Stats</a>");
+            response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
 
         } else {
-            try (PrintWriter out = response.getWriter()) {
-                response.setStatus(404);
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet start</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<p>");
-                out.println("Error, no game started");
-                out.println("</p>");
-                out.println("</body>");
-                out.println("<button type='button'><a href='/jack/start'>Start</a> </button>");
-                out.println("<a href='/jack/stats' class=button> Game Stats</a>");
 
-                out.println("</html>");
+                response.setStatus(404);
+                session.setAttribute("errorMessage", "error no game started");
+                response.sendRedirect(request.getContextPath() + "/error.jsp");
+
             }
 
         }
-    }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

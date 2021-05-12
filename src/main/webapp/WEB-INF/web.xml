@@ -28,6 +28,10 @@
         <servlet-name>Stats</servlet-name>
         <servlet-class>nz.ac.massey.cs.webtech.s19041253.Stats</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>possibleMoves</servlet-name>
+        <servlet-class>nz.ac.massey.cs.webtech.s19041253.possibleMoves</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Start</servlet-name>
         <url-pattern>/jack/start</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>Won</servlet-name>
         <url-pattern>/jack/won</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>possibleMoves</servlet-name>
+        <url-pattern>/jack/possibleMoves</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Stats</servlet-name>

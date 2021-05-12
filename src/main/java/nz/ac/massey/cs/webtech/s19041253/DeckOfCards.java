@@ -22,7 +22,7 @@ public class DeckOfCards {
         deckOfCards = new Card[ CARDAMOUNT ];
 
         int i = 0;
-        String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+        String[] suits = {"♣ &clubs", "♦ &diams", "♥ &hearts", "♠ &spades"};
         for ( String suit: suits)
             for ( int rank = 1; rank <= 13; rank++ )
                 deckOfCards[i++] = new Card(rank, suit);

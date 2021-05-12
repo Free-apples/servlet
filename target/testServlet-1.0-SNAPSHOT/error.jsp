@@ -13,7 +13,7 @@
 <body>
 <h1>Error</h1>
 <% out.print(request.getSession().getAttribute("errorMessage")); %>
-<a href='${pageContext.request.contextPath}/jack/start' class=button> Start new game</a>
+<a href='${pageContext.request.contextPath}/jack/start' class=button> Go Back</a>
 
 </body>
 </html>
