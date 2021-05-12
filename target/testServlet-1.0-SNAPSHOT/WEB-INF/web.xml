@@ -50,7 +50,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
-        <url-pattern>/MyServlet</url-pattern>
+        <url-pattern>/test/MyServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

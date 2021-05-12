@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.Session;
 import nz.ac.massey.cs.webtech.s19041253.CardHand.*;
 
-@WebServlet(name = "Start", urlPatterns = {"/jack/start"})
 public class Start extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -25,8 +24,6 @@ public class Start extends HttpServlet {
             CardHand computerHand = new CardHand();
             userHand.createHand(deck);
             computerHand.createHand(deck);
-            HttpSession oldSess = request.getSession();
-            oldSess.invalidate();
             HttpSession session = request.getSession();
 
             session.setAttribute("Turn", "user");
@@ -42,29 +39,12 @@ public class Start extends HttpServlet {
                 cardString.append(card.getRank()+ " ");
             }
 
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet start</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet start at " + request.getContextPath() + "</h1>");
-            out.println("<p>");
-            out.println("Computer Hand: [] " + computerHand.getFirstCard().getSuit() + Integer.toString(computerHand.getFirstCard().getRank()));
-            out.println("</p>");
-            out.println("<p>");
-            out.println("User Hand: " + cardString);
-            out.println("</p>");
-            out.println("</body>");
-            out.println("<form action='/jack/move/stand' method='post'>");
-            out.println("<input type='submit' value='Stand'>");
-            out.println("</form>");
-            out.println("<form action='/jack/move/hit' method='post'>");
-            out.println("<input type='submit' value='Hit'>");
-            out.println("</form>");
-            out.println("<a href='/jack/stats' class=button> Game Stats</a>");
-            out.println("</html>");
+            session.setAttribute("computerHandString", "Computer Hand: [] " + computerHand.getFirstCard().getSuit() + Integer.toString(computerHand.getFirstCard().getRank()));
+            session.setAttribute("userHandString", "User Hand: " + cardString );
+            session.setAttribute("button", "<form action='/jack/move/stand' method='post'><input type='submit' value='Stand'>" +
+                   " </form><form action='/jack/move/hit' method='post'> <input type='submit' value='Hit'></form>" +
+                    "<a href='/jack/stats' class=button> Game Stats</a>" );
+            response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
 
         }
     }
@@ -72,24 +52,17 @@ public class Start extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        HttpSession oldSess = request.getSession();
+        oldSess.invalidate();
+        HttpSession session = request.getSession();
 
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet start</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet start at " + request.getContextPath() + "</h1>");
-            out.println("<p>");
-            out.println("Start new game");
-            out.println("</p>");
-            out.println("<form action='/jack/start' method='post'>");
-            out.println("<input type='submit' value='Start'>");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
+            session.setAttribute("heading", "Black Jack");
+            session.setAttribute("description", "Welcome to BlackJack would you like to play a game?");
+            session.setAttribute("button", "<form action='/jack/start' method='post'><input type='submit' value='Start new game'>" +
+                    "<a href='/jack/stats' class=button> Game Stats</a>");
+            response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
+
         }
 
     }
-}
+
