@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 public class possibleMoves extends HttpServlet {
@@ -16,7 +17,8 @@ public class possibleMoves extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("userHand") != null){
+        if (session.getAttribute("deck") != null){
+            response.setStatus(404);
             String possibleMoves = " ";
             CardHand userHand = (CardHand) session.getAttribute("userHand");
             if(userHand.getValue() <= 21 && session.getAttribute("turn") == "user"){
@@ -25,11 +27,20 @@ public class possibleMoves extends HttpServlet {
             else{
                 possibleMoves = "won";
             }
-            session.setAttribute("possibleMoves", possibleMoves);
+            try (PrintWriter out = response.getWriter()){
+                out.println(possibleMoves);
+            }
+
+
+
         }else{
             response.setStatus(404);
-            session.setAttribute("errorMessage", "No game started");
-            response.sendRedirect(request.getContextPath() + "/error.jsp");
+
+            try (PrintWriter out = response.getWriter()){
+                out.println("start");
+            }
+
+
         }
     }
 }

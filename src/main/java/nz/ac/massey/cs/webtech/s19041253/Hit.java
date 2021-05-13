@@ -28,10 +28,10 @@ public class Hit extends HttpServlet {
                         cardString.append(card.getCardValue()).append(" ");
                     }
                     session.setAttribute("userHandString", "User Hand: " + cardString);
-                    session.setAttribute("button", "<form action='/jack/move/stand' method='post'><input type='submit' value='Stand'>" +
-                            " </form><form action='/jack/move/hit' method='post'> <input type='submit' value='Hit'></form>" +
-                            " </form><form action='/jack/won' method='post'> <input type='submit' value='See winner'></form>" +
-                            "<a href='/jack/stats' class=button> Game Stats</a>");
+//                    session.setAttribute("button", "<form action='/jack/move/stand' onsubmit='return validateForm('stand')' method='post'><input type='submit' value='Stand'>" +
+//                            " </form><form action='/jack/move/hit' onsubmit='return validateForm('hit')' method='post'> <input type='submit' value='Hit'></form>" +
+//                            "<form action='/jack/won' onsubmit='return validateForm('won')' method='post'><input type='submit' value='See winner'></form>" +
+//                            "<a href='/jack/stats' class=button> Game Stats</a>");
                     response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
                 } else {
                     String message = "Unknown error";

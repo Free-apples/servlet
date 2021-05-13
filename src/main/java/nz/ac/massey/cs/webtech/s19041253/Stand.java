@@ -15,6 +15,7 @@ public class Stand extends HttpServlet {
         CardHand computerHand = (CardHand) session.getAttribute("computerHand");
         CardHand userHand = (CardHand) session.getAttribute("userHand");
         DeckOfCards deck = (DeckOfCards) session.getAttribute("deck");
+
         if (userHand != null) {
             while (computerHand.getValue() <= 17) {
                 computerHand.addToHand(deck);
@@ -35,10 +36,7 @@ public class Stand extends HttpServlet {
             }
 
             session.setAttribute("computerHandString", "Computer Hand: " + computerHand.getFirstCard().getSuit() + computerHand.getFirstCard().getCardValue() + computerString);
-            session.setAttribute("button", "<form action='/jack/move/stand' method='post'><input type='submit' value='Stand'>" +
-                    " </form><form action='/jack/move/hit' method='post'> <input type='submit' value='Hit'></form>" +
-                    "<form action='/jack/won' method='post'><input type='submit' value='See winner'></form>" +
-                    "<a href='/jack/stats' class=button> Game Stats</a>");
+            session.setAttribute("turn", "computer");
             response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
 
         } else {
