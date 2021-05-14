@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>BlackJack</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script>
         function validateForm(move) {
 
@@ -20,9 +21,11 @@
 
 </head>
 <body>
-<h1>
+<div class="container-fluid py-5">
+<h1 class="display-5 fw-bold">
 <% out.print(request.getSession().getAttribute("heading")); %>
 </h1>
+</div>
 <h2><% out.print(request.getSession().getAttribute("description"));%></h2>
 <p>
 <% if (request.getSession().getAttribute("computerHandString") != null){
@@ -31,7 +34,7 @@
 </p>
 <p>
     <% if (request.getSession().getAttribute("userHandString") != null){
-        out.print("user hand" + request.getSession().getAttribute("userHandString"));
+        out.print(request.getSession().getAttribute("userHandString"));
 
     }; %>
 </p>

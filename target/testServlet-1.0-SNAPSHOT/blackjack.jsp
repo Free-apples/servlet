@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>BlackJack</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script>
         function validateForm(move) {
 
@@ -14,25 +15,17 @@
                 return true;
             }
             alert("Move not possible: possible moves: " + resp);
-
             return false;
-            // if (request.status === 200) {
-            //     var resp = request.response.toString();
-            //     if (move in resp) {
-            //         alert(resp)
-            //         return true;
-            //     }
-            // }
-            // alert(request.response.toString());
-            // return false;
         }
     </script>
 
 </head>
 <body>
-<h1>
+<div class="container-fluid py-5">
+<h1 class="display-5 fw-bold">
 <% out.print(request.getSession().getAttribute("heading")); %>
 </h1>
+</div>
 <h2><% out.print(request.getSession().getAttribute("description"));%></h2>
 <p>
 <% if (request.getSession().getAttribute("computerHandString") != null){
@@ -41,18 +34,11 @@
 </p>
 <p>
     <% if (request.getSession().getAttribute("userHandString") != null){
-        out.print("user hand" + request.getSession().getAttribute("userHandString"));
+        out.print(request.getSession().getAttribute("userHandString"));
 
     }; %>
 </p>
 
-<%--<form action='${pageContext.request.contextPath}/jack/move/stand' onsubmit="return validateForm('stand')" method='post'><input type='submit' value='Stand'></form>--%>
-<%--<form id="myForm" action='${pageContext.request.contextPath}/jack/move/stand' onsubmit="return validateForm('stand')" method='post'><input type='submit' value='TestStand'></form>--%>
-<%--<script>--%>
-<%--test = validateForm("move");--%>
-<%--alert(test)</script>--%>
-
-<%--<% out.print(request.getSession().getAttribute("button")); %>--%>
 <form action='${pageContext.request.contextPath}/jack/start'  method='post'><input type='submit' value='Start new game'></form>
 <form action='${pageContext.request.contextPath}/jack/move/stand' onsubmit="return validateForm('stand')" method='post'><input type='submit' value='Stand'></form>
 <form action='${pageContext.request.contextPath}/jack/move/hit' onsubmit="return validateForm('hit')" method='post'> <input type='submit' value='Hit'></form>

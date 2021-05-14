@@ -8,16 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpSession;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import org.json.simple.*;
-import org.json.simple.parser.*;
 
-@WebServlet(name = "Won", urlPatterns = {"/jack/won"})
 
-//todo create file to save persistent data to
+
 public class Won extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             response.setContentType("text/html;charset=UTF-8");
@@ -36,29 +29,12 @@ public class Won extends HttpServlet {
                     else if(computerHand.getValue() <= 21 && (userHand.getValue() < computerHand.getValue() || userHand.getValue() > 21)){
                         winner = "Computer";
                     }
-                    try {
-                        JSONParser jsonParser = new JSONParser();
-                        FileReader reader = (new FileReader("stats.json"));
-                        Object obj = jsonParser.parse(reader);
-                        JSONObject jsonObject = (JSONObject)obj;
-                        Long gamesPlayed = (Long) jsonObject.get("gamesPlayed");
-                        Long gamesWonByUser = (Long) jsonObject.get("gamesWonByUser");
-                        JSONObject updateJsonObject = new JSONObject();
-                        updateJsonObject.put("gamesPlayed", gamesPlayed + 1);
-                        updateJsonObject.put("gamesWonByUser", userWon + gamesWonByUser);
-                        File file = new File("./stats.json");
-                        FileWriter fileWrite = new FileWriter(file);
-                        fileWrite.write(updateJsonObject.toJSONString());
-                        fileWrite.flush();
-                    } catch(Exception e) {
 
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("gamesPlayed", 1);
-                        jsonObject.put("gamesWonByUser", userWon );
-                        File file = new File("./stats.json");
-                        FileWriter fileWrite = new FileWriter(file);
-                        fileWrite.write(jsonObject.toJSONString());
-                        fileWrite.flush();
+                    //using stats data
+                    StatsData statsData = StatsData.getInstance();
+                    statsData.incrementGames();
+                    if (userWon == 1) {
+                        statsData.incrementWins();
                     }
                     try (PrintWriter out = response.getWriter()) {
                         /* TODO output your page here. You may use following sample code. */
@@ -69,9 +45,9 @@ public class Won extends HttpServlet {
                         out.println("</head>");
                         out.println("<body>");
                         out.println("<h1>Servlet won at " + request.getContextPath() + "</h1>");
-                        out.println("Winner is: " + winner);
-                        out.println("Computer hand value is: " + computerHand.getValue());
-                        out.println("User hand value is: " + userHand.getValue());
+                        out.println("<p>Winner is: " + winner +"</p>");
+                        out.println("<p>Computer hand value is: " + computerHand.getValue() + "</p>");
+                        out.println("<p>User hand value is: " + userHand.getValue()+ "</p>");
                         out.println("</body>");
                         out.println("</html>");
 

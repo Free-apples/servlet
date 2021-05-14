@@ -1,22 +1,17 @@
 package nz.ac.massey.cs.webtech.s19041253;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.io.FileReader;
+
 
 @WebServlet(name = "Stats", urlPatterns = {"/jack/stats"})
 public class Stats extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -25,12 +20,9 @@ public class Stats extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             try {
-                JSONParser jsonParser = new JSONParser();
-                FileReader reader = (new FileReader("stats.json"));
-                Object obj = jsonParser.parse(reader);
-                JSONObject jsonobj = (JSONObject) obj;
-                Long gamesPlayed = (Long) jsonobj.get("gamesPlayed");
-                Long gamesWonByUser = (Long) jsonobj.get("gamesWonByUser");
+                StatsData statsData = StatsData.getInstance();
+                Long gamesPlayed = statsData.getGames();
+                Long gamesWonByUser = statsData.getWins();
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");

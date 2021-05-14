@@ -14,6 +14,7 @@ public class Start extends HttpServlet {
         deck.Shuffle();
         CardHand userHand = new CardHand();
         CardHand computerHand = new CardHand();
+
         userHand.createHand(deck);
         computerHand.createHand(deck);
         HttpSession oldSess = request.getSession();
@@ -34,12 +35,9 @@ public class Start extends HttpServlet {
         }
 
         session.setAttribute("heading", "Black Jack");
-        session.setAttribute("description", "Please choose whether ot hit or stand");
+        session.setAttribute("description", "Please choose whether to hit or stand");
         session.setAttribute("computerHandString", "Computer Hand: [] " + computerHand.getFirstCard().getSuit() + Integer.toString(computerHand.getFirstCard().getRank()));
         session.setAttribute("userHandString", "User Hand: " + cardString );
-//        session.setAttribute("button", "<form action='/jack/move/stand' onsubmit='return validateForm('stand')' method='post'><input type='submit' value='Stand'>" +
-//                " </form><form action='/jack/move/hit' onsubmit='return validateForm('hit')' method='post'> <input type='submit' value='Hit'></form>" +
-//                "<a href='/jack/stats' class=button> Game Stats</a>"
         response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
 
 
@@ -53,8 +51,6 @@ public class Start extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("heading", "Black Jack");
         session.setAttribute("description", "Welcome to BlackJack would you like to play a game?");
-//        session.setAttribute("button", "<form action='/jack/start' method='post'><input type='submit' value='Start new game'>" +
-//                "<a href='/jack/stats' class=button> Game Stats</a>");
         response.sendRedirect(request.getContextPath() + "/blackjack.jsp");
 
         }
